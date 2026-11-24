@@ -189,176 +189,176 @@
     // --- DATABASE DEI CONTENUTI DEI 24 GIORNI ---
     // Puoi facilmente personalizzare immagini, video o testi per ciascun giorno!
     const adventData = [
-      {
-        day: 1,
-        title: "Inizia il Viaggio: Accendiamo la Prima Candela",
-        type: "image",
-        mediaUrl: "https://images.unsplash.com/photo-1543258103-a62bdc069871?auto=format&fit=crop&w=800&q=80",
-        message: "Benvenuto a dicembre! Prepara una tazza calda di cioccolata: comincia oggi il conto alla rovescia più dolce dell'anno."
-      },
-      {
-        day: 2,
-        title: "Biscotti alla Cannella & Zenzero",
-        type: "image",
-        mediaUrl: "https://images.unsplash.com/photo-1576618148400-f54bed99fcfd?auto=format&fit=crop&w=800&q=80",
-        message: "Il profumo di cannella riempie l'aria. Ricetta del giorno: dedicati una mezz'ora per infornare qualcosa di dolce."
-      },
-      {
-        day: 3,
-        title: "Caminetto & Melodie d'Inverno",
-        type: "video",
-        // Utilizziamo embed di YouTube con loop e muto piacevole
-        mediaUrl: "https://www.youtube.com/embed/L_LUpnjgPso?autoplay=1&mute=1&controls=0&loop=1",
-        message: "Lasciati cullare dal crepitio della legna e dalla tranquillità dell'inverno."
-      },
-      {
-        day: 4,
-        title: "Decorare l'Albero di Natale",
-        type: "image",
-        mediaUrl: "https://images.unsplash.com/photo-1512474932049-78ac69eed10c?auto=format&fit=crop&w=800&q=80",
-        message: "Palle di vetro colorate, nastri dorati e una stella in cima: ogni ornamento racchiude un ricordo prezioso."
-      },
-      {
-        day: 5,
-        title: "La Notte delle Fiabe",
-        type: "image",
-        mediaUrl: "https://images.unsplash.com/photo-1513297887119-d46091b24bfa?auto=format&fit=crop&w=800&q=80",
-        message: "Riscopri stasera una favola classica o un bel film natalizio con le persone a te care."
-      },
-      {
-        day: 6,
-        title: "Festa di San Nicola",
-        type: "image",
-        mediaUrl: "https://images.unsplash.com/photo-1544427920-c49ccfb85579?auto=format&fit=crop&w=800&q=80",
-        message: "Una calza ricca di mandarini e cioccolato per festeggiare la tradizione di San Nicola."
-      },
-      {
-        day: 7,
-        title: "Vigilia dell'Immacolata",
-        type: "image",
-        mediaUrl: "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-        message: "Le luci della città si accendono tutte insieme, trasformando ogni strada in un sentiero di fiaba."
-      },
-      {
-        day: 8,
-        title: "L'Immacolata & Il Presepe",
-        type: "image",
-        mediaUrl: "https://i.imgur.com/DetuAQW.jpeg",
-        message: "Per tradizione oggi si accendono ufficialmente gli alberi e i presepi in tutte le case italiane. Buona festa!"
-      },
-      {
-        day: 9,
-        title: "Un Regalo Fatto a Mano",
-        type: "image",
-        mediaUrl: "https://images.unsplash.com/photo-1513885535751-8b9238bd345a?auto=format&fit=crop&w=800&q=80",
-        message: "Il valore di un regalo non sta nel prezzo, ma nel tempo e nel pensiero dedicati per realizzarlo."
-      },
-      {
-        day: 10,
-        title: "Paesaggio Innevato e Silenzio",
-        type: "video",
-        mediaUrl: "https://www.youtube.com/embed/5qap5aO4i9A?autoplay=1&mute=1&controls=0&loop=1",
-        message: "Fermati un istante ad ammirare la danza silenziosa della neve sui tetti delle case."
-      },
-      {
-        day: 11,
-        title: "Note di Jingle Bells",
-        type: "image",
-        mediaUrl: "https://images.unsplash.com/photo-1482517967863-00e15c9b44be?auto=format&fit=crop&w=800&q=80",
-        message: "Metti su la tua playlist natalizia preferita e canta a squarciagola: è scientificamente provato che scalda il cuore!"
-      },
-      {
-        day: 12,
-        title: "La Magia dei Mercatini",
-        type: "image",
-        mediaUrl: "https://images.unsplash.com/photo-1575440615460-705f3ca3977c?auto=format&fit=crop&w=800&q=80",
-        message: "Profumo di vin brulè, casette di legno illuminate e statuine artigianali: la magia del Nord."
-      },
-      {
-        day: 13,
-        title: "Santa Lucia, la Notte più Lunga",
-        type: "image",
-        mediaUrl: "https://images.unsplash.com/photo-1481833761820-0509d3217039?auto=format&fit=crop&w=800&q=80",
-        message: "Porta luce nei giorni più bui: accendi una candela alla finestra per illuminare il cammino di chi ami."
-      },
-      {
-        day: 14,
-        title: "I Maglioni Natalizi (Ugly Sweaters)",
-        type: "image",
-        mediaUrl: "https://images.unsplash.com/photo-1576723417715-6b408c988c23?auto=format&fit=crop&w=800&q=80",
-        message: "Non aver paura di sfoggiare il maglione con le renne o i campanellini: l'allegria natalizia non ha regole!"
-      },
-      {
-        day: 15,
-        title: "A Metà Strada!",
-        type: "image",
-        mediaUrl: "https://images.unsplash.com/photo-1512389142860-9c449e58a543?auto=format&fit=crop&w=800&q=80",
-        message: "Mancano esattamente 10 giorni a Natale! Fai una lista delle cose belle accadute in quest'anno."
-      },
-      {
-        day: 16,
-        title: "Biglietti d'Auguri Scritto a Mano",
-        type: "image",
-        mediaUrl: "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=80",
-        message: "In un mondo di messaggi istantanei, una cartolina o lettera scritta col cuore è il regalo più prezioso."
-      },
-      {
-        day: 17,
-        title: "Danza dei Fiocchi di Neve",
-        type: "video",
-        mediaUrl: "https://www.youtube.com/embed/vz91QO5N53M?autoplay=1&mute=1&controls=0&loop=1",
-        message: "Guarda come la natura si veste del suo abito bianco più candido ed elegante."
-      },
-      {
-        day: 18,
-        title: "Pattinaggio sul Ghiaccio",
-        type: "image",
-        mediaUrl: "https://images.unsplash.com/photo-1482867996988-29ec3a0f1aac?auto=format&fit=crop&w=800&q=80",
-        message: "Lame affilate, sciarpe svolazzanti e risate sul ghiaccio: momenti d'inverno indimenticabili."
-      },
-      {
-        day: 19,
-        title: "Abbracci Caldi",
-        type: "image",
-        mediaUrl: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=800&q=80",
-        message: "Il freddo fuori è solo una scusa in più per stringersi forte e farsi compagnia."
-      },
-      {
-        day: 20,
-        title: "La Slitta delle Renne",
-        type: "image",
-        mediaUrl: "https://images.unsplash.com/photo-1579208575657-c595a05383b7?auto=format&fit=crop&w=800&q=80",
-        message: "In Lapponia le renne sono già pronte: Rudolph ha acceso il suo naso rosso per guidare la rotta."
-      },
-      {
-        day: 21,
-        title: "Solstizio d'Inverno",
-        type: "image",
-        mediaUrl: "https://images.unsplash.com/photo-1483982258113-b72862e6cff6?auto=format&fit=crop&w=800&q=80",
-        message: "Da oggi le giornate ricominciano a guadagnare minuti di luce. Festeggiamo la rinascita del Sole."
-      },
-      {
-        day: 22,
-        title: "Canti sotto le Stelle",
-        type: "image",
-        mediaUrl: "https://images.unsplash.com/photo-1512909006721-3d6018887383?auto=format&fit=crop&w=800&q=80",
-        message: "Manca pochissimo. Senti la frenesia e la gioia nell'aria? Le case cominciano a riempirsi di famiglia."
-      },
-      {
-        day: 23,
-        title: "La Vigilia della Vigilia",
-        type: "image",
-        mediaUrl: "https://images.unsplash.com/photo-1513885535751-8b9238bd345a?auto=format&fit=crop&w=800&q=80",
-        message: "I preparativi sono al culmine! Pentole che borbottano, regali impacchettati con nastrini dorati."
-      },
-      {
-        day: 24,
-        title: "La Magica Notte della Vigilia di Natale",
-        type: "video",
-        mediaUrl: "https://www.youtube.com/embed/79kpiZ_6y7c?autoplay=1&mute=1&controls=0&loop=1",
-        message: "È arrivato il momento tanto atteso! Possa questa notte magica portare pace, luce e immenso amore nella tua casa. Buon Natale!"
-      }
-    ];
+  {
+    day: 1,
+    title: "Inizia il Viaggio: Accendiamo la Prima Candela",
+    type: "image",
+    mediaUrl: "https://media.tenor.com/sNC_X3VevFoAAAAM/cat-screaming-cat.gif",
+    message: "Giorno 1 e stiamo già smadonnando. Oggi è solo l'inizio di un mese di panico, scadenze e clienti convinti che basti mettere 'magia' nel copy per far vendere una ciofeca."
+  },
+  {
+    day: 2,
+    title: "Biscotti alla Cannella & Zenzero",
+    type: "image",
+    mediaUrl: "https://images.unsplash.com/photo-1576618148400-f54bed99fcfd?auto=format&fit=crop&w=800&q=80",
+    message: "Biscotti perfetti per fare gli splendidi su Instagram e far venire il diabete a chi non ha chiesto nulla. Infornali pure, tanto l'unico dato che cresce davvero oggi è la glicemia."
+  },
+  {
+    day: 3,
+    title: "Caminetto & Melodie d'Inverno",
+    type: "video",
+    mediaUrl: "https://www.youtube.com/embed/L_LUpnjgPso?autoplay=1&mute=1&controls=0&loop=1",
+    message: "Un finto caminetto in loop su schermo muto: il ritratto sputato del nostro lavoro. Tanta fuffa estetica, zero calore umano e un budget che brucia comunque."
+  },
+  {
+    day: 4,
+    title: "Decorare l'Albero di Natale",
+    type: "image",
+    mediaUrl: "https://images.unsplash.com/photo-1512474932049-78ac69eed10c?auto=format&fit=crop&w=800&q=80",
+    message: "Appendi pure due palline lucide per coprire il disastro che c'è sotto. È esattamente quello che facciamo ogni volta che dobbiamo 'riposizionare' un prodotto impresentabile con due aggettivi acchiappaclick."
+  },
+  {
+    day: 5,
+    title: "La Notte delle Fiabe",
+    type: "image",
+    mediaUrl: "https://images.unsplash.com/photo-1513297887119-d46091b24bfa?auto=format&fit=crop&w=800&q=80",
+    message: "Favole per adulti: 'il cliente approva al primo giro', 'il brief è chiaro' e 'paghiamo a trenta giorni'. Sogna tranquillo, tanto la realtà ti sveglia domani alle nove."
+  },
+  {
+    day: 6,
+    title: "Festa di San Nicola",
+    type: "image",
+    mediaUrl: "https://images.unsplash.com/photo-1544427920-c49ccfb85579?auto=format&fit=crop&w=800&q=80",
+    message: "Mandarini e cioccolato per comprare un attimo di entusiasmo finto. Se il tuo pubblico avesse bisogno di così poco per fidelizzarsi, non avremmo metà dei problemi che abbiamo."
+  },
+  {
+    day: 7,
+    title: "Vigilia dell'Immacolata",
+    type: "image",
+    mediaUrl: "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
+    message: "Luci ovunque e caos totale, identico al nostro gruppo di lavoro quando qualcuno tocca un settaggio alle 18:55 del venerdì. Auguri a chi deve ancora sistemare i danni."
+  },
+  {
+    day: 8,
+    title: "L'Immacolata & Il Presepe",
+    type: "image",
+    mediaUrl: "https://i.imgur.com/DetuAQW.jpeg",
+    message: "Tutti a fare i devoti davanti al presepe con l'albero acceso, come se bastassero due lucine a ripulire un anno di scelte imbarazzanti. Buona festa, ipocrisia inclusa."
+  },
+  {
+    day: 9,
+    title: "Un Regalo Fatto a Mano",
+    type: "image",
+    mediaUrl: "https://images.unsplash.com/photo-1513885535751-8b9238bd345a?auto=format&fit=crop&w=800&q=80",
+    message: "'Fatto a mano' è il modo elegante per dire che non c'era una lira e ci siamo arrangiati con gli scarti. Fiocco grosso, valore reale minimo, ma almeno su LinkedIn suona bene."
+  },
+  {
+    day: 10,
+    title: "Paesaggio Innevato e Silenzio",
+    type: "image",
+    mediaUrl: "https://images.unsplash.com/photo-1482517967863-00e15c9b44be?auto=format&fit=crop&w=800&q=80",
+    message: "Silenzio tombale e neve immacolata: l'unica cosa più irreale di un paesaggio così è un preventivo che non viene contestato riga per riga."
+  },
+  {
+    day: 11,
+    title: "Note di Jingle Bells",
+    type: "image",
+    mediaUrl: "https://media.tenor.com/LaAU-zC_8DAAAAAM/883-dancing.gif",
+    message: "Balla pure come se non ci fosse un domani, tanto domani c'è comunque — con una call di allineamento alle 9."
+    
+  },
+  {
+    day: 12,
+    title: "La Magia dei Mercatini",
+    type: "image",
+    mediaUrl: "https://images.unsplash.com/photo-1575440615460-705f3ca3977c?auto=format&fit=crop&w=800&q=80",
+    message: "Mercatini: il trionfo assoluto del marketing emozionale applicato a cianfrusaglie sovraprezzate. Paghi oro per un bicchiere di vino tiepido e ti senti pure fortunato."
+  },
+  {
+    day: 13,
+    title: "Santa Lucia, la Notte più Lunga",
+    type: "image",
+    mediaUrl: "https://images.unsplash.com/photo-1481833761820-0509d3217039?auto=format&fit=crop&w=800&q=80",
+    message: "La notte più lunga dell'anno, perfetta per realizzare che metà del lavoro fatto finora è stato inutile. Accendi pure la candela, ma non aspettarti miracoli."
+  },
+  {
+    day: 14,
+    title: "I Maglioni Natalizi (Ugly Sweaters)",
+    type: "image",
+    mediaUrl: "https://images.unsplash.com/photo-1576723417715-6b408c988c23?auto=format&fit=crop&w=800&q=80",
+    message: "Mettersi un maglione orribile e chiamarlo 'ironico' è la truffa estetica più comoda del decennio. Ti sta malissimo, ma almeno fa pendant con le slide di fine anno."
+  },
+  {
+    day: 15,
+    title: "A Metà Strada!",
+    type: "image",
+    mediaUrl: "https://images.unsplash.com/photo-1512389142860-9c449e58a543?auto=format&fit=crop&w=800&q=80",
+    message: "Siamo a metà e la voglia di lavorare è già sotto zero. Fai pure la lista delle cose belle dell'anno: se ti serve più di trenta secondi per riempirla, dice tutto."
+  },
+  {
+    day: 16,
+    title: "Biglietti d'Auguri Scritto a Mano",
+    type: "image",
+    mediaUrl: "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=80",
+    message: "Un biglietto scritto a mano: romantico, lento e zero tracciamento. Peccato che chi lo riceve spesso lo legga con la stessa attenzione con cui legge le nostre newsletter."
+  },
+  {
+    day: 17,
+    title: "Danza dei Fiocchi di Neve",
+    type: "video",
+    mediaUrl: "https://www.youtube.com/embed/vz91QO5N53M?autoplay=1&mute=1&controls=0&loop=1",
+    message: "Fiocchi di neve che scendono piano, come le risposte dei clienti quando chiedi i materiali per andare in stampa. Guardali pure, tanto il ritardo è già colpa nostra."
+  },
+  {
+    day: 18,
+    title: "Pattinaggio sul Ghiaccio",
+    type: "image",
+    mediaUrl: "https://images.unsplash.com/photo-1482867996988-29ec3a0f1aac?auto=format&fit=crop&w=800&q=80",
+    message: "Sul ghiaccio scivoli e ti fai male, esattamente come quando provi a far quadrare i numeri con i costi che volano. Cerca almeno di cadere senza fare scena."
+  },
+  {
+    day: 19,
+    title: "Abbracci Caldi",
+    type: "image",
+    mediaUrl: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=800&q=80",
+    message: "Un abbraccio caldo costa zero e non ha bisogno di un piano editoriale. Approfittane prima che torni a suonare il telefono con la solita urgenza inventata."
+  },
+  {
+    day: 20,
+    title: "La Slitta delle Renne",
+    type: "image",
+    mediaUrl: "https://images.unsplash.com/photo-1579208575657-c595a05383b7?auto=format&fit=crop&w=800&q=80",
+    message: "Un tizio che promette regali gratis a tutto il pianeta senza budget, senza magazzino e con consegne in una notte: è il cliente peggiore che abbiamo mai avuto."
+  },
+  {
+    day: 21,
+    title: "Solstizio d'Inverno",
+    type: "image",
+    mediaUrl: "https://images.unsplash.com/photo-1483982258113-b72862e6cff6?auto=format&fit=crop&w=800&q=80",
+    message: "Oggi finisce il buio più lungo e ricomincia la luce, così puoi vedere chiaramente quanto ti sei sprecato per niente. Grande traguardo, davvero."
+  },
+  {
+    day: 22,
+    title: "Canti sotto le Stelle",
+    type: "image",
+    mediaUrl: "https://i.imgur.com/6lo8RRU.jpeg",
+    message: "Cantare sotto le stelle è bellissimo finché non ti accorgi che stai facendo figura da pirla davanti a tutti. Molto simile a presentare un'idea bruciata in riunione."
+  },
+  {
+    day: 23,
+    title: "La Vigilia della Vigilia",
+    type: "image",
+    mediaUrl: "https://images.unsplash.com/photo-1513885535751-8b9238bd345a?auto=format&fit=crop&w=800&q=80",
+    message: "Tutto ridotto all'ultimo secondo, pacchi chiusi male e nervi a fior di pelle. Niente di nuovo: è il nostro standard operativo da gennaio a dicembre."
+  },
+  {
+    day: 24,
+    title: "La Magica Notte della Vigilia di Natale",
+    type: "video",
+    mediaUrl: "https://www.youtube.com/embed/79kpiZ_6y7c?autoplay=1&mute=1&controls=0&loop=1",
+    message: "Eccoci alla Vigilia: mangia finché non ti muovi, sopporta i parenti peggio dei brief e spegni il cervello. Buon Natale, e speriamo che il prossimo anno non faccia così schifo."
+  }
+];
 
     // --- STATO DELL'APPLICAZIONE ---
     let testMode = false;
