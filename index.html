@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Calendario dell'Avvento 2026</title>
+  <link rel="icon" href="https://www.gbs-group.it/wp-content/uploads/2021/09/cropped-gbs-icon-150x150.png" sizes="32x32">
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Google Fonts: Great Vibes & Outfit -->
@@ -78,6 +79,10 @@
       background: #8b1e2a;
       border-radius: 4px;
     }
+
+    .sm\:h-64 {
+      height: 32rem !important;
+    }
   </style>
 </head>
 <body class="relative flex flex-col items-center justify-between min-h-screen px-4 py-8">
@@ -110,7 +115,7 @@
           <i data-lucide="key-round" class="w-4 h-4 text-amber-400"></i>
           <span>Sblocca Tutte (Test Mode):</span>
         </label>
-        <button id="test-mode-toggle" class="relative inline-flex h-6 w-11 items-center rounded-full bg-gray-700 transition-colors focus:outline-none">
+        <button id="test-mode-toggle" type="button" aria-pressed="false" class="relative inline-flex h-6 w-11 items-center rounded-full bg-gray-700 transition-colors focus:outline-none">
           <span id="toggle-circle" class="inline-block h-4 w-4 transform rounded-full bg-white transition-transform translate-x-1"></span>
         </button>
       </div>
@@ -142,6 +147,50 @@
 
   </div>
 
+  <!-- MODALE PASSWORD TEST MODE -->
+  <div id="password-modal-container" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300">
+    <div id="password-modal-card" class="relative w-full max-w-md bg-gradient-to-b from-[#250810] to-[#120306] border-2 border-amber-400/50 rounded-3xl p-6 sm:p-7 shadow-2xl transform scale-90 transition-all duration-300">
+      <button id="password-modal-close" type="button" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-red-950/80 border border-amber-400/50 flex items-center justify-center text-amber-300 hover:bg-amber-400 hover:text-red-950 transition-colors">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div class="flex items-center gap-2 mb-3">
+        <div class="px-3 py-1 rounded-full bg-amber-400/20 border border-amber-400/40 text-amber-300 text-xs font-bold uppercase tracking-wider font-cinzel flex items-center gap-1.5">
+          <i data-lucide="shield-lock" class="w-3.5 h-3.5"></i>
+          <span>Accesso Riservato</span>
+        </div>
+      </div>
+
+      <h3 class="font-cinzel text-xl font-bold text-amber-100 mb-2">
+        Attiva Test Mode
+      </h3>
+      <p class="text-xs sm:text-sm text-rose-100/80 mb-4">
+        Inserisci la password per sbloccare tutte le 24 caselle in anteprima.
+      </p>
+
+      <input
+        id="test-mode-password-input"
+        type="password"
+        autocomplete="off"
+        placeholder="Inserisci password..."
+        class="w-full px-4 py-3 rounded-xl bg-black/40 border border-amber-500/30 text-amber-100 placeholder-rose-200/40 text-sm focus:outline-none focus:border-amber-400 transition-colors"
+      />
+
+      <p id="test-mode-password-error" class="text-xs text-rose-400 mt-2 hidden">
+        Password errata. Riprova.
+      </p>
+
+      <div class="mt-5 flex justify-end gap-2.5">
+        <button id="password-modal-cancel" type="button" class="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-amber-200/80 text-xs sm:text-sm font-semibold hover:bg-white/10 transition-colors">
+          Annulla
+        </button>
+        <button id="password-modal-submit" type="button" class="px-5 py-2 rounded-xl gold-gradient text-red-950 font-bold text-xs sm:text-sm tracking-wider uppercase shadow-lg hover:brightness-110 active:scale-95 transition-all">
+          Sblocca
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- MODALE DETTAGLIO SORPRESA -->
   <div id="modal-container" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300">
     <div id="modal-card" class="relative w-full max-w-lg bg-gradient-to-b from-[#250810] to-[#120306] border-2 border-amber-400/50 rounded-3xl p-6 sm:p-8 shadow-2xl transform scale-90 transition-all duration-300">
@@ -167,7 +216,7 @@
       </h3>
 
       <!-- Contenuto Multimediale (Immagine o Video) -->
-      <div id="modal-media-wrapper" class="relative w-full rounded-2xl overflow-hidden bg-white/100 border border-amber-500/20 mb-4 flex items-center justify-center min-h-[350px] max-h-[450px]">
+      <div id="modal-media-wrapper" class="relative w-full rounded-2xl overflow-hidden bg-black/60 border border-amber-500/20 mb-4 flex items-center justify-center min-h-[350px] max-h-[450px]">
         <!-- Immagine o iframe/video iniettati con JS -->
       </div>
 
@@ -187,184 +236,182 @@
 
   <script>
     // --- DATABASE DEI CONTENUTI DEI 24 GIORNI ---
-    // Puoi facilmente personalizzare immagini, video o testi per ciascun giorno!
     const adventData = [
-  {
-    day: 1,
-    title: "Inizia il Viaggio: Accendiamo la Prima Candela",
-    type: "image",
-    mediaUrl: "https://media.tenor.com/sNC_X3VevFoAAAAM/cat-screaming-cat.gif",
-    message: "Giorno 1 e stiamo già smadonnando. Oggi è solo l'inizio di un mese di panico, scadenze e clienti convinti che basti mettere 'magia' nel copy per far vendere una ciofeca."
-  },
-  {
-    day: 2,
-    title: "Biscotti alla Cannella & Zenzero",
-    type: "image",
-    mediaUrl: "https://images.unsplash.com/photo-1576618148400-f54bed99fcfd?auto=format&fit=crop&w=800&q=80",
-    message: "Biscotti perfetti per fare gli splendidi su Instagram e far venire il diabete a chi non ha chiesto nulla. Infornali pure, tanto l'unico dato che cresce davvero oggi è la glicemia."
-  },
-  {
-    day: 3,
-    title: "Caminetto & Melodie d'Inverno",
-    type: "video",
-    mediaUrl: "https://www.youtube.com/embed/L_LUpnjgPso?autoplay=1&mute=1&controls=0&loop=1",
-    message: "Un finto caminetto in loop su schermo muto: il ritratto sputato del nostro lavoro. Tanta fuffa estetica, zero calore umano e un budget che brucia comunque."
-  },
-  {
-    day: 4,
-    title: "Decorare l'Albero di Natale",
-    type: "image",
-    mediaUrl: "https://images.unsplash.com/photo-1512474932049-78ac69eed10c?auto=format&fit=crop&w=800&q=80",
-    message: "Appendi pure due palline lucide per coprire il disastro che c'è sotto. È esattamente quello che facciamo ogni volta che dobbiamo 'riposizionare' un prodotto impresentabile con due aggettivi acchiappaclick."
-  },
-  {
-    day: 5,
-    title: "La Notte delle Fiabe",
-    type: "image",
-    mediaUrl: "https://images.unsplash.com/photo-1513297887119-d46091b24bfa?auto=format&fit=crop&w=800&q=80",
-    message: "Favole per adulti: 'il cliente approva al primo giro', 'il brief è chiaro' e 'paghiamo a trenta giorni'. Sogna tranquillo, tanto la realtà ti sveglia domani alle nove."
-  },
-  {
-    day: 6,
-    title: "Festa di San Nicola",
-    type: "image",
-    mediaUrl: "https://images.unsplash.com/photo-1544427920-c49ccfb85579?auto=format&fit=crop&w=800&q=80",
-    message: "Mandarini e cioccolato per comprare un attimo di entusiasmo finto. Se il tuo pubblico avesse bisogno di così poco per fidelizzarsi, non avremmo metà dei problemi che abbiamo."
-  },
-  {
-    day: 7,
-    title: "Vigilia dell'Immacolata",
-    type: "image",
-    mediaUrl: "https://images.unsplash.com/photo-1543257580-7269da773bf5?auto=format&fit=crop&w=800&q=80",
-    message: "Luci ovunque e caos totale, identico al nostro gruppo di lavoro quando qualcuno tocca un settaggio alle 18:55 del venerdì. Auguri a chi deve ancora sistemare i danni."
-  },
-  {
-    day: 8,
-    title: "L'Immacolata & Il Presepe",
-    type: "image",
-    mediaUrl: "https://i.imgur.com/DetuAQW.jpeg",
-    message: "Tutti a fare i devoti davanti al presepe con l'albero acceso, come se bastassero due lucine a ripulire un anno di scelte imbarazzanti. Buona festa, ipocrisia inclusa."
-  },
-  {
-    day: 9,
-    title: "Un Regalo Fatto a Mano",
-    type: "image",
-    mediaUrl: "https://images.unsplash.com/photo-1513885535751-8b9238bd345a?auto=format&fit=crop&w=800&q=80",
-    message: "'Fatto a mano' è il modo elegante per dire che non c'era una lira e ci siamo arrangiati con gli scarti. Fiocco grosso, valore reale minimo, ma almeno su LinkedIn suona bene."
-  },
-  {
-    day: 10,
-    title: "Paesaggio Innevato e Silenzio",
-    type: "image",
-    mediaUrl: "https://images.unsplash.com/photo-1482517967863-00e15c9b44be?auto=format&fit=crop&w=800&q=80",
-    message: "Silenzio tombale e neve immacolata: l'unica cosa più irreale di un paesaggio così è un preventivo che non viene contestato riga per riga."
-  },
-  {
-    day: 11,
-    title: "Note di Jingle Bells",
-    type: "image",
-    mediaUrl: "https://media.tenor.com/LaAU-zC_8DAAAAAM/883-dancing.gif",
-    message: "Balla pure come se non ci fosse un domani, tanto domani c'è comunque — con una call di allineamento alle 9."
-    
-  },
-  {
-    day: 12,
-    title: "La Magia dei Mercatini",
-    type: "image",
-    mediaUrl: "https://images.unsplash.com/photo-1575440615460-705f3ca3977c?auto=format&fit=crop&w=800&q=80",
-    message: "Mercatini: il trionfo assoluto del marketing emozionale applicato a cianfrusaglie sovraprezzate. Paghi oro per un bicchiere di vino tiepido e ti senti pure fortunato."
-  },
-  {
-    day: 13,
-    title: "Santa Lucia, la Notte più Lunga",
-    type: "image",
-    mediaUrl: "https://images.unsplash.com/photo-1481833761820-0509d3217039?auto=format&fit=crop&w=800&q=80",
-    message: "La notte più lunga dell'anno, perfetta per realizzare che metà del lavoro fatto finora è stato inutile. Accendi pure la candela, ma non aspettarti miracoli."
-  },
-  {
-    day: 14,
-    title: "I Maglioni Natalizi (Ugly Sweaters)",
-    type: "image",
-    mediaUrl: "https://images.unsplash.com/photo-1576723417715-6b408c988c23?auto=format&fit=crop&w=800&q=80",
-    message: "Mettersi un maglione orribile e chiamarlo 'ironico' è la truffa estetica più comoda del decennio. Ti sta malissimo, ma almeno fa pendant con le slide di fine anno."
-  },
-  {
-    day: 15,
-    title: "A Metà Strada!",
-    type: "image",
-    mediaUrl: "https://images.unsplash.com/photo-1512389142860-9c449e58a543?auto=format&fit=crop&w=800&q=80",
-    message: "Siamo a metà e la voglia di lavorare è già sotto zero. Fai pure la lista delle cose belle dell'anno: se ti serve più di trenta secondi per riempirla, dice tutto."
-  },
-  {
-    day: 16,
-    title: "Biglietti d'Auguri Scritto a Mano",
-    type: "image",
-    mediaUrl: "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=80",
-    message: "Un biglietto scritto a mano: romantico, lento e zero tracciamento. Peccato che chi lo riceve spesso lo legga con la stessa attenzione con cui legge le nostre newsletter."
-  },
-  {
-    day: 17,
-    title: "Danza dei Fiocchi di Neve",
-    type: "video",
-    mediaUrl: "https://www.youtube.com/embed/vz91QO5N53M?autoplay=1&mute=1&controls=0&loop=1",
-    message: "Fiocchi di neve che scendono piano, come le risposte dei clienti quando chiedi i materiali per andare in stampa. Guardali pure, tanto il ritardo è già colpa nostra."
-  },
-  {
-    day: 18,
-    title: "Pattinaggio sul Ghiaccio",
-    type: "image",
-    mediaUrl: "https://images.unsplash.com/photo-1482867996988-29ec3a0f1aac?auto=format&fit=crop&w=800&q=80",
-    message: "Sul ghiaccio scivoli e ti fai male, esattamente come quando provi a far quadrare i numeri con i costi che volano. Cerca almeno di cadere senza fare scena."
-  },
-  {
-    day: 19,
-    title: "Abbracci Caldi",
-    type: "image",
-    mediaUrl: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=800&q=80",
-    message: "Un abbraccio caldo costa zero e non ha bisogno di un piano editoriale. Approfittane prima che torni a suonare il telefono con la solita urgenza inventata."
-  },
-  {
-    day: 20,
-    title: "La Slitta delle Renne",
-    type: "image",
-    mediaUrl: "https://images.unsplash.com/photo-1579208575657-c595a05383b7?auto=format&fit=crop&w=800&q=80",
-    message: "Un tizio che promette regali gratis a tutto il pianeta senza budget, senza magazzino e con consegne in una notte: è il cliente peggiore che abbiamo mai avuto."
-  },
-  {
-    day: 21,
-    title: "Solstizio d'Inverno",
-    type: "image",
-    mediaUrl: "https://images.unsplash.com/photo-1483982258113-b72862e6cff6?auto=format&fit=crop&w=800&q=80",
-    message: "Oggi finisce il buio più lungo e ricomincia la luce, così puoi vedere chiaramente quanto ti sei sprecato per niente. Grande traguardo, davvero."
-  },
-  {
-    day: 22,
-    title: "Canti sotto le Stelle",
-    type: "image",
-    mediaUrl: "https://i.imgur.com/6lo8RRU.jpeg",
-    message: "Cantare sotto le stelle è bellissimo finché non ti accorgi che stai facendo figura da pirla davanti a tutti. Molto simile a presentare un'idea bruciata in riunione."
-  },
-  {
-    day: 23,
-    title: "La Vigilia della Vigilia",
-    type: "image",
-    mediaUrl: "https://images.unsplash.com/photo-1513885535751-8b9238bd345a?auto=format&fit=crop&w=800&q=80",
-    message: "Tutto ridotto all'ultimo secondo, pacchi chiusi male e nervi a fior di pelle. Niente di nuovo: è il nostro standard operativo da gennaio a dicembre."
-  },
-  {
-    day: 24,
-    title: "La Magica Notte della Vigilia di Natale",
-    type: "video",
-    mediaUrl: "https://www.youtube.com/embed/79kpiZ_6y7c?autoplay=1&mute=1&controls=0&loop=1",
-    message: "Eccoci alla Vigilia: mangia finché non ti muovi, sopporta i parenti peggio dei brief e spegni il cervello. Buon Natale, e speriamo che il prossimo anno non faccia così schifo."
-  }
-];
+      {
+        day: 1,
+        title: "Inizia il Viaggio: Accendiamo la Prima Candela",
+        type: "image",
+        mediaUrl: "https://media.tenor.com/sNC_X3VevFoAAAAM/cat-screaming-cat.gif",
+        message: "Giorno 1 e stiamo già smadonnando. Oggi è solo l'inizio di un mese di panico, scadenze e clienti convinti che basti mettere 'magia' nel copy per far vendere una ciofeca."
+      },
+      {
+        day: 2,
+        title: "Biscotti alla Cannella & Zenzero",
+        type: "image",
+        mediaUrl: "https://www.emugifs.net/wp-content/uploads/2021/09/Homer-Cespuglio-Base-per-MEME-in-GIF-Animata-Scarica-Gratis-e-Crea-il-Tuo-MEME-Animato-con-Homer-Simpson.gif",
+        message: "Quando ti chiedono come sta andando la campagna natalizia e l'unica cosa che vuoi è sparire all'indietro dentro una siepe."
+      },
+      {
+        day: 3,
+        title: "Caminetto & Melodie d'Inverno",
+        type: "video",
+        mediaUrl: "https://i.imgur.com/bDZyFQi.mp4",
+        message: "Un finto caminetto in loop su schermo muto: il ritratto sputato del nostro lavoro. Tanta fuffa estetica, zero calore umano e un budget che brucia comunque."
+      },
+      {
+        day: 4,
+        title: "Decorare l'Albero di Natale",
+        type: "image",
+        mediaUrl: "https://i.pinimg.com/736x/63/05/0a/63050ae9df594c789a0710ab02559837.jpg",
+        message: "Appendi pure due palline lucide per coprire il disastro che c'è sotto. È esattamente quello che facciamo ogni volta che dobbiamo 'riposizionare' un prodotto impresentabile con due aggettivi acchiappaclick."
+      },
+      {
+        day: 5,
+        title: "La Notte delle Fiabe",
+        type: "image",
+        mediaUrl: "https://i.imgur.com/YOMVcZU.jpeg",
+        message: "Favole per adulti: 'il cliente approva al primo giro', 'il brief è chiaro' e 'paghiamo a trenta giorni'. Sogna tranquillo, tanto la realtà ti sveglia domani alle nove."
+      },
+      {
+        day: 6,
+        title: "Festa di San Nicola",
+        type: "image",
+        mediaUrl: "https://i.imgur.com/KsAAGnY.gif",
+        message: "Mandarini e cioccolato per comprare un attimo di entusiasmo finto. Se il tuo pubblico avesse bisogno di così poco per fidelizzarsi, non avremmo metà dei problemi che abbiamo."
+      },
+      {
+        day: 7,
+        title: "Vigilia dell'Immacolata",
+        type: "video",
+        mediaUrl: "https://i.imgur.com/yWvOv22.mp4",
+        message: "Luci ovunque e caos totale, identico al nostro gruppo di lavoro quando qualcuno tocca un settaggio alle 18:55 del venerdì. Auguri a chi deve ancora sistemare i danni."
+      },
+      {
+        day: 8,
+        title: "L'Immacolata & Il Presepe",
+        type: "image",
+        mediaUrl: "https://i.imgur.com/DetuAQW.jpeg",
+        message: "Tutti a fare i devoti davanti al presepe con l'albero acceso, come se bastassero due lucine a ripulire un anno di scelte imbarazzanti. Buona festa, ipocrisia inclusa."
+      },
+      {
+        day: 9,
+        title: "Un Regalo Fatto a Mano",
+        type: "image",
+        mediaUrl: "https://i.imgur.com/FmilmRQ.jpeg",
+        message: "'Fatto a mano' è il modo elegante per dire che non c'era una lira e ci siamo arrangiati con gli scarti. Fiocco grosso, valore reale minimo, ma almeno su LinkedIn suona bene."
+      },
+      {
+        day: 10,
+        title: "Paesaggio Innevato e Silenzio",
+        type: "video",
+        mediaUrl: "https://images.unsplash.com/photo-1481833761820-0509d3217039?auto=format&fit=crop&w=800&q=80",
+        message: "Silenzio tombale e neve immacolata: l'unica cosa più irreale di un paesaggio così è un preventivo che non viene contestato riga per riga."
+      },
+      {
+        day: 11,
+        title: "Note di Jingle Bells",
+        type: "image",
+        mediaUrl: "https://media.tenor.com/LaAU-zC_8DAAAAAM/883-dancing.gif",
+        message: "Balla pure come se non ci fosse un domani, tanto domani c'è comunque — con una call di allineamento alle 9."
+      },
+      {
+        day: 12,
+        title: "La Magia dei Mercatini",
+        type: "image",
+        mediaUrl: "https://i.imgur.com/zC032ON.jpeg",
+        message: "Mercatini: il trionfo assoluto del marketing emozionale applicato a cianfrusaglie sovraprezzate. Paghi oro per un bicchiere di vino tiepido e ti senti pure fortunato."
+      },
+      {
+        day: 13,
+        title: "Santa Lucia, la Notte più Lunga",
+        type: "image",
+        mediaUrl: "https://images.unsplash.com/photo-1481833761820-0509d3217039?auto=format&fit=crop&w=800&q=80",
+        message: "La notte più lunga dell'anno, perfetta per realizzare che metà del lavoro fatto finora è stato inutile. Accendi pure la candela, ma non aspettarti miracoli."
+      },
+      {
+        day: 14,
+        title: "I Maglioni Natalizi (Ugly Sweaters)",
+        type: "video",
+        mediaUrl: "https://images.unsplash.com/photo-1481833761820-0509d3217039?auto=format&fit=crop&w=800&q=80",
+        message: "Mettersi un maglione orribile e chiamarlo 'ironico' è la truffa estetica più comoda del decennio. Ti sta malissimo, ma almeno fa pendant con le slide di fine anno."
+      },
+      {
+        day: 15,
+        title: "A Metà Strada!",
+        type: "image",
+        mediaUrl: "https://i.imgur.com/y4lQtWf.jpeg",
+        message: "Siamo a metà e la voglia di lavorare è già sotto zero. Fai pure la lista delle cose belle dell'anno: se ti serve più di trenta secondi per riempirla, dice tutto."
+      },
+      {
+        day: 16,
+        title: "Biglietti d'Auguri Scritto a Mano",
+        type: "image",
+        mediaUrl: "https://i.imgur.com/GRWkzId.jpeg",
+        message: "Un biglietto scritto a mano: romantico, lento e zero tracciamento. Peccato che chi lo riceve spesso lo legga con la stessa attenzione con cui legge le nostre newsletter."
+      },
+      {
+        day: 17,
+        title: "Danza dei Fiocchi di Neve",
+        type: "video",
+        mediaUrl: "https://images.unsplash.com/photo-1482867996988-29ec3a0f1aac?auto=format&fit=crop&w=800&q=80",
+        message: "Fiocchi di neve che scendono piano, come le risposte dei clienti quando chiedi i materiali per andare in stampa. Guardali pure, tanto il ritardo è già colpa nostra."
+      },
+      {
+        day: 18,
+        title: "Pattinaggio sul Ghiaccio",
+        type: "image",
+        mediaUrl: "https://images.unsplash.com/photo-1482867996988-29ec3a0f1aac?auto=format&fit=crop&w=800&q=80",
+        message: "Sul ghiaccio scivoli e ti fai male, esattamente come quando provi a far quadrare i numeri con i costi che volano. Cerca almeno di cadere senza fare scena."
+      },
+      {
+        day: 19,
+        title: "Abbracci Caldi",
+        type: "image",
+        mediaUrl: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=800&q=80",
+        message: "Un abbraccio caldo costa zero e non ha bisogno di un piano editoriale. Approfittane prima che torni a suonare il telefono con la solita urgenza inventata."
+      },
+      {
+        day: 20,
+        title: "La Slitta delle Renne",
+        type: "image",
+        mediaUrl: "https://images.unsplash.com/photo-1579208575657-c595a05383b7?auto=format&fit=crop&w=800&q=80",
+        message: "Un tizio che promette regali gratis a tutto il pianeta senza budget, senza magazzino e con consegne in una notte: è il cliente peggiore che abbiamo mai avuto."
+      },
+      {
+        day: 21,
+        title: "Solstizio d'Inverno",
+        type: "image",
+        mediaUrl: "https://images.unsplash.com/photo-1483982258113-b72862e6cff6?auto=format&fit=crop&w=800&q=80",
+        message: "Oggi finisce il buio più lungo e ricomincia la luce, così puoi vedere chiaramente quanto ti sei sprecato per niente. Grande traguardo, davvero."
+      },
+      {
+        day: 22,
+        title: "Canti sotto le Stelle",
+        type: "image",
+        mediaUrl: "https://i.imgur.com/6lo8RRU.jpeg",
+        message: "Cantare sotto le stelle è bellissimo finché non ti accorgi che stai facendo figura da pirla davanti a tutti. Molto simile a presentare un'idea bruciata in riunione."
+      },
+      {
+        day: 23,
+        title: "La Vigilia della Vigilia",
+        type: "image",
+        mediaUrl: "https://images.unsplash.com/photo-1513885535751-8b9238bd345a?auto=format&fit=crop&w=800&q=80",
+        message: "Tutto ridotto all'ultimo secondo, pacchi chiusi male e nervi a fior di pelle. Niente di nuovo: è il nostro standard operativo da gennaio a dicembre."
+      },
+      {
+        day: 24,
+        title: "La Magica Notte della Vigilia di Natale",
+        type: "video",
+        mediaUrl: "https://images.unsplash.com/photo-1482867996988-29ec3a0f1aac?auto=format&fit=crop&w=800&q=80",
+        message: "Eccoci alla Vigilia: mangia finché non ti muovi, sopporta i parenti peggio dei brief e spegni il cervello. Buon Natale, e speriamo che il prossimo anno non faccia così schifo."
+      }
+    ];
 
     // --- STATO DELL'APPLICAZIONE ---
+    const TEST_MODE_PASSWORD = "Hulksmash10!";
     let testMode = false;
     let openedDoors = new Set();
 
-    // Carica stato caselle salvate in localStorage per persistenza
     try {
       const saved = localStorage.getItem('advent_opened_doors');
       if (saved) {
@@ -379,21 +426,20 @@
     const currentMonth = realNow.getMonth(); // 11 = Dicembre (0-indicizzato)
     const currentRealDay = realNow.getDate();
 
-    // Aggiorna etichetta della data corrente
     const optionsDate = { weekday: 'long', day: 'numeric', month: 'long' };
     const dateStr = realNow.toLocaleDateString('it-IT', optionsDate);
     document.getElementById('current-date-display').textContent = dateStr.charAt(0).toUpperCase() + dateStr.slice(1);
 
-    /**
-     * Verifica se una data casella (1..24) è sbloccata
-     */
     function isDoorAvailable(dayNumber) {
       if (testMode) return true;
-      // Per essere sbloccata, deve essere Dicembre (mese 11) e il giorno deve essere >= dayNumber
       if (currentMonth === 11 && currentRealDay >= dayNumber) {
         return true;
       }
       return false;
+    }
+
+    function isDirectVideoFile(url) {
+      return /\.(mp4|webm|ogg)(\?.*)?$/i.test(url);
     }
 
     // --- RENDER DELLE CASELLE ---
@@ -406,8 +452,8 @@
         const isAvailable = isDoorAvailable(item.day);
         const isOpened = openedDoors.has(item.day);
         const isChristmasEve = item.day === 25;
+        const isVideoItem = item.type === 'video' || isDirectVideoFile(item.mediaUrl);
 
-        // Creazione Card Casella (Pulsante pulito senza ante)
         const card = document.createElement('div');
         card.id = `card-day-${item.day}`;
         card.className = `calendar-card relative aspect-square w-full rounded-2xl select-none cursor-pointer p-[2px] ${
@@ -463,7 +509,7 @@
                 ? 'text-rose-200/40' 
                 : 'text-amber-200/80 group-hover:text-amber-300'
             }">
-              <i data-lucide="${item.type === 'video' ? 'play-circle' : 'gift'}" class="w-3 h-3 text-amber-400"></i>
+              <i data-lucide="${isVideoItem ? 'play-circle' : 'gift'}" class="w-3 h-3 text-amber-400"></i>
               <span class="truncate max-w-[90px] sm:max-w-[120px] font-medium">
                 ${!isAvailable ? 'Bloccata' : (isOpened ? 'Rivedi' : 'Scopri')}
               </span>
@@ -472,13 +518,10 @@
           </div>
         `;
 
-        // Click handler
         card.addEventListener('click', () => handleCardClick(item));
-
         gridContainer.appendChild(card);
       });
 
-      // Refresh icone Lucide
       if (window.lucide) {
         lucide.createIcons();
       }
@@ -494,20 +537,15 @@
         return;
       }
 
-      // Segna come aperta
       openedDoors.add(item.day);
       try {
         localStorage.setItem('advent_opened_doors', JSON.stringify([...openedDoors]));
       } catch(e) {}
 
-      // Aggiorna lo stato visivo della card (badge e stile)
       renderCalendar();
-
-      // Apri direttamente la modale con la foto o video
       openModal(item);
     }
 
-    // Animazione di rifiuto / shake per caselle chiuse
     function shakeCard(day) {
       const cardElem = document.getElementById(`card-day-${day}`);
       if (!cardElem) return;
@@ -536,15 +574,34 @@
     const modalTypeBadge = document.getElementById('modal-type-badge');
 
     function openModal(item) {
+      const isDirectVideo = isDirectVideoFile(item.mediaUrl);
+      const isVideoItem = item.type === 'video' || isDirectVideo;
+
       modalDay.textContent = item.day;
       modalTitle.textContent = item.title;
       modalMessage.textContent = item.message;
-      modalTypeBadge.textContent = item.type === 'video' ? 'Video Sorpresa' : 'Foto & Pensiero';
+      modalTypeBadge.textContent = isVideoItem ? 'Video Sorpresa' : 'Foto & Pensiero';
 
-      // Pulisci media precedente
       modalMediaWrapper.innerHTML = '';
 
-      if (item.type === 'video') {
+      if (isDirectVideo) {
+        const video = document.createElement('video');
+        video.src = item.mediaUrl;
+        video.className = "w-full h-56 sm:h-64 object-contain rounded-xl bg-black shadow-lg";
+        video.autoplay = true;
+        video.loop = true;
+        video.muted = true;
+        video.playsInline = true;
+        video.controls = true;
+        video.preload = "auto";
+        video.setAttribute('referrerpolicy', 'no-referrer');
+
+        video.addEventListener('loadeddata', () => {
+          video.play().catch(() => {});
+        });
+
+        modalMediaWrapper.appendChild(video);
+      } else if (item.type === 'video') {
         const iframe = document.createElement('iframe');
         iframe.src = item.mediaUrl;
         iframe.className = "w-full h-56 sm:h-64 rounded-xl border-0 shadow-lg";
@@ -555,6 +612,7 @@
         const img = document.createElement('img');
         img.src = item.mediaUrl;
         img.alt = item.title;
+        img.setAttribute('referrerpolicy', 'no-referrer');
         img.className = "w-full h-56 sm:h-64 object-contain rounded-xl transition-transform duration-500 hover:scale-105";
         img.onerror = () => {
           img.src = 'https://images.unsplash.com/photo-1543258103-a62bdc069871?auto=format&fit=crop&w=800&q=80';
@@ -562,23 +620,27 @@
         modalMediaWrapper.appendChild(img);
       }
 
-      // Mostra modale con transizione
       modalContainer.classList.remove('opacity-0', 'pointer-events-none');
       modalCard.classList.remove('scale-90');
       modalCard.classList.add('scale-100');
     }
 
     function closeModal() {
+      const activeVideo = modalMediaWrapper.querySelector('video');
+      if (activeVideo) {
+        activeVideo.pause();
+        activeVideo.removeAttribute('src');
+        activeVideo.load();
+      }
+
       modalContainer.classList.add('opacity-0', 'pointer-events-none');
       modalCard.classList.add('scale-90');
       modalCard.classList.remove('scale-100');
       
-      // Stop ai video in riproduzione
       setTimeout(() => {
         modalMediaWrapper.innerHTML = '';
       }, 300);
 
-      // Ri-renderizza per aggiornare icone "check"
       renderCalendar();
     }
 
@@ -613,26 +675,88 @@
       }, 3500);
     }
 
-    // --- TOGGLE TEST / ANTEPRIMA MODE ---
+    // --- TOGGLE TEST / ANTEPRIMA MODE CON PASSWORD ---
     const toggleBtn = document.getElementById('test-mode-toggle');
     const toggleCircle = document.getElementById('toggle-circle');
+    const passwordModalContainer = document.getElementById('password-modal-container');
+    const passwordModalCard = document.getElementById('password-modal-card');
+    const passwordModalClose = document.getElementById('password-modal-close');
+    const passwordModalCancel = document.getElementById('password-modal-cancel');
+    const passwordModalSubmit = document.getElementById('password-modal-submit');
+    const passwordInput = document.getElementById('test-mode-password-input');
+    const passwordError = document.getElementById('test-mode-password-error');
 
-    toggleBtn.addEventListener('click', () => {
-      testMode = !testMode;
+    function syncToggleUI() {
+      toggleBtn.setAttribute('aria-pressed', String(testMode));
       if (testMode) {
         toggleBtn.classList.remove('bg-gray-700');
         toggleBtn.classList.add('bg-emerald-600');
         toggleCircle.classList.remove('translate-x-1');
         toggleCircle.classList.add('translate-x-6');
-        showToast("Modalità Test ATTIVA: Tutte le 24 caselle sono ora sbloccate per l'anteprima!");
       } else {
         toggleBtn.classList.remove('bg-emerald-600');
         toggleBtn.classList.add('bg-gray-700');
         toggleCircle.classList.remove('translate-x-6');
         toggleCircle.classList.add('translate-x-1');
-        showToast("Modalità Reale ATTIVA: Si aprono solo fino al giorno corrente di Dicembre.");
       }
-      renderCalendar();
+    }
+
+    function openPasswordModal() {
+      passwordInput.value = '';
+      passwordError.classList.add('hidden');
+      passwordModalContainer.classList.remove('opacity-0', 'pointer-events-none');
+      passwordModalCard.classList.remove('scale-90');
+      passwordModalCard.classList.add('scale-100');
+      setTimeout(() => passwordInput.focus(), 100);
+    }
+
+    function closePasswordModal() {
+      passwordModalContainer.classList.add('opacity-0', 'pointer-events-none');
+      passwordModalCard.classList.add('scale-90');
+      passwordModalCard.classList.remove('scale-100');
+      passwordInput.value = '';
+      passwordError.classList.add('hidden');
+    }
+
+    function verifyTestModePassword() {
+      if (passwordInput.value === TEST_MODE_PASSWORD) {
+        testMode = true;
+        syncToggleUI();
+        closePasswordModal();
+        showToast("Modalità Test ATTIVA: Tutte le 24 caselle sono ora sbloccate per l'anteprima!");
+        renderCalendar();
+      } else {
+        passwordError.classList.remove('hidden');
+        passwordInput.focus();
+      }
+    }
+
+    toggleBtn.addEventListener('click', () => {
+      if (!testMode) {
+        openPasswordModal();
+      } else {
+        testMode = false;
+        syncToggleUI();
+        showToast("Modalità Reale ATTIVA: Si aprono solo fino al giorno corrente di Dicembre.");
+        renderCalendar();
+      }
+    });
+
+    passwordModalClose.addEventListener('click', closePasswordModal);
+    passwordModalCancel.addEventListener('click', closePasswordModal);
+    passwordModalSubmit.addEventListener('click', verifyTestModePassword);
+
+    passwordModalContainer.addEventListener('click', (e) => {
+      if (e.target === passwordModalContainer) closePasswordModal();
+    });
+
+    passwordInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        verifyTestModePassword();
+      } else if (e.key === 'Escape') {
+        closePasswordModal();
+      }
     });
 
     // --- ANIMAZIONE NEVE SU CANVAS ---
@@ -680,7 +804,6 @@
       }
     }
 
-    // Popola fiocchi
     const flakeCount = window.innerWidth < 768 ? 45 : 90;
     for (let i = 0; i < flakeCount; i++) {
       const f = new Snowflake();
@@ -697,8 +820,8 @@
       requestAnimationFrame(animateSnow);
     }
 
-    // Inizializzazione iniziale
     window.addEventListener('DOMContentLoaded', () => {
+      syncToggleUI();
       renderCalendar();
       animateSnow();
     });
